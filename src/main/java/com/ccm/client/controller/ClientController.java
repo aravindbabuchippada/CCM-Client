@@ -1,5 +1,6 @@
 package com.ccm.client.controller;
 
+import com.ccm.client.kafka.CustomerFeedbackConsumerService;
 import com.ccm.client.pojos.ClientPojo;
 import com.ccm.client.responsepojos.ClientResponse;
 import com.ccm.client.responsepojos.ResponsePojo;
@@ -15,9 +16,12 @@ import java.util.List;
 public class ClientController {
 
     private final ClientService clientService;
+    private final CustomerFeedbackConsumerService cfcService;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService,
+                            CustomerFeedbackConsumerService cfcService) {
         this.clientService = clientService;
+        this.cfcService = cfcService;
     }
 
     @GetMapping("check")
@@ -38,5 +42,10 @@ public class ClientController {
     @GetMapping("getClientById")
     public ResponseEntity<com.ccm.common.responsepojos.ClientMapResponse> getClientById(@RequestParam("id") Integer id) {
         return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("checkCustomerFeedback")
+    public ResponseEntity<List<String>> checkCustomerFeedback() {
+        return new ResponseEntity<>(cfcService.getAllFeedback(), HttpStatus.OK);
     }
 }
