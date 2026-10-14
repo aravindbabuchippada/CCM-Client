@@ -1,0 +1,46 @@
+<configuration>
+    <!-- path to the generated logs folder -->
+    <property name="LOG_PATH" value="${log.path:-./logs}" />
+
+    <appender name="ControllerAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/CCM-Client/ccm-client-controller.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ServiceAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/CCM-Client/ccm-client-service.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="GlobalAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/CCM-Client/ccm-client-global.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Package-specific loggers -->
+    <logger name="com.ccm.client.controller" level="DEBUG" additivity="false">
+        <appender-ref ref="ControllerAppender"/>
+    </logger>
+
+    <logger name="com.ccm.client.services" level="DEBUG" additivity="false">
+        <appender-ref ref="ServiceAppender"/>
+    </logger>
+
+    <logger name="com.ccm.client.logging" level="DEBUG" additivity="false">
+        <appender-ref ref="GlobalAppender"/>
+    </logger>
+
+    <!-- Root fallback logger -->
+    <root level="DEBUG">
+        <appender-ref ref="GlobalAppender"/>
+    </root>
+</configuration>
